@@ -679,7 +679,20 @@ const withExcerpt = posts
     }
   }
   @media (prefers-reduced-motion: reduce){
-    .textcont tspan{ animation: none !important; fill: var(--fill); stroke: transparent; stroke-opacity: 0; stroke-width: 0; }
+    .textcont tspan{
+      /* 縁取りを見やすく表示（減速モードではフェードを使わない） */
+      animation: none !important;
+      fill: var(--fill);
+      /* outlineはshadowで作るので、strokeは無効化 */
+      stroke: none !important;
+      stroke-opacity: 0 !important;
+      stroke-width: 0 !important;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      /* JSで設定される dash が縁を隠してしまうため無効化 */
+      stroke-dasharray: none !important;
+      stroke-dashoffset: 0 !important;
+    }
   }
 
   .hero-svg-headline{
@@ -690,7 +703,19 @@ const withExcerpt = posts
   }
   /* ヒーロー見出し（SVG）に影を付ける */
   .hero-svg-headline text{
-    filter: drop-shadow(0 2px 4px rgba(6, 92, 32, 0.35)) drop-shadow(0 8px 20px rgba(1, 85, 3, 0.18));
+    /* strokeの輪郭ガタつきを避けるため、縁取りは緑のshadowで擬似的に作る */
+    filter: 
+      drop-shadow(-1px -1px 0 rgba(0, 79, 60, 1))
+      drop-shadow(0px -1px 0 rgba(0, 79, 60, 1))
+      drop-shadow(1px -1px 0 rgba(0, 79, 60, 1))
+      drop-shadow(-1px 0px 0 rgba(0, 79, 60, 1))
+      drop-shadow(1px 0px 0 rgba(0, 79, 60, 1))
+      drop-shadow(-1px 1px 0 rgba(0, 79, 60, 1))
+      drop-shadow(0px 1px 0 rgba(0, 79, 60, 1))
+      drop-shadow(1px 1px 0 rgba(0, 79, 60, 1))
+      /* 影（奥行き） */
+      drop-shadow(0 2px 4px rgba(0,0,0,0.35))
+      drop-shadow(0 8px 20px rgba(0,0,0,0.18)) !important;
   }
   @media (min-width: 769px){
     /* スマホ以上は中央より少し上に配置 */
@@ -718,14 +743,28 @@ const withExcerpt = posts
     }
   }
   .textcont tspan{
-    fill: transparent; stroke: var(--ink); stroke-width: 1.5px;
+    fill: transparent;
+    /* outlineはshadowで作るので、strokeは無効化 */
+    stroke: none !important;
+    stroke-width: 0 !important;
+    stroke-opacity: 0 !important;
+    /* スケールしても線幅がブレにくく、角の“欠け”を減らす */
+    vector-effect: non-scaling-stroke;
+    paint-order: fill;
+    /* JS/CSS側に残っていても見た目には影響しない */
     --len: 900; --i: 0;
-    stroke-dasharray: var(--len); stroke-dashoffset: var(--len);
-    animation: draw var(--draw) ease forwards, fillIn 0s linear forwards;
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    /* draw完了直後に縁を消す（瞬時に消さず、見た目を均一に） */
+    animation: draw var(--draw) ease forwards, fillIn 0.35s ease forwards;
     animation-delay: calc(var(--i) * var(--step)), calc(var(--i) * var(--step) + var(--draw));
   }
   @keyframes draw{ to{ stroke-dashoffset: 0; } }
-  @keyframes fillIn{ to{ fill: var(--fill); stroke: transparent; stroke-opacity: 0; stroke-width: 0; } }
+  @keyframes fillIn{
+    to{
+      fill: var(--fill);
+    }
+  }
   @media (max-width: 768px){
     .font-min{ font-size: clamp(50px, 12vw, 100px); }
     .textcont tspan{ stroke-width: 1.5px; }
