@@ -15,14 +15,12 @@ import HeaderLogo from '../assets/img/risevista-logo.webp';
 import Hero1 from '../assets/img/hero1.webp';
 import Hero2 from '../assets/img/hero2.webp';
 import Hero3 from '../assets/img/hero3.webp';
-import Hero4 from '../assets/img/hero4.webp';
 import Circle from '../assets/img/circle.png';
 // 4枚の画像を定義（実際のパスに変更してください）
 const heroImages = [
   Hero1, 
   Hero2, 
-  Hero3, 
-  Hero4  
+  Hero3  
 ];
 
 // Hero section text constants
@@ -671,8 +669,8 @@ const withExcerpt = posts
   :root{
     --draw: 1.2s;   /* 1文字を描く時間 */
     --step: .12s;   /* 文字間ディレイ */
-    --ink: #C79D4F; /* stroke の色（金色） */
-    --fill: #001722; /* fill の色（primary） */
+    --ink: #004f3c; /* stroke の色（緑の縁） */
+    --fill: #C79D4F; /* fill の色（金色） */
   }
   @media (max-width: 768px){
     :root{
@@ -689,6 +687,12 @@ const withExcerpt = posts
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     gap: 4px; z-index: 10;
+  }
+  @media (min-width: 769px){
+    /* スマホ以上は中央より少し上に配置 */
+    .hero-svg-headline{
+      transform: translateY(-200px);
+    }
   }
   @media (max-width: 768px){
     .hero-svg-headline{
@@ -812,22 +816,18 @@ const withExcerpt = posts
   will-change: opacity; /* パフォーマンス安定 */
 }
 
-/* ▼ 各スライド：24sを4分割して担当（0–6s / 6–12s / 12–18s / 18–24s） */
+/* ▼ 各スライド：24sを3分割して担当（0–8s / 8–16s / 16–24s） */
 .ellipse-background-image.slide-0 {
   animation: smoothSlideShow 24s linear infinite both;
   animation-delay: 0s;      /* 0–6s 担当 */
 }
 .ellipse-background-image.slide-1 {
   animation: smoothSlideShow 24s linear infinite both;
-  animation-delay: -6s;     /* 6–12s 担当 */
+  animation-delay: -8s;     /* 8–16s 担当 */
 }
 .ellipse-background-image.slide-2 {
   animation: smoothSlideShow 24s linear infinite both;
-  animation-delay: -12s;    /* 12–18s 担当 */
-}
-.ellipse-background-image.slide-3 {
-  animation: smoothSlideShow 24s linear infinite both;
-  animation-delay: -18s;    /* 18–24s 担当 */
+  animation-delay: -16s;    /* 16–24s 担当 */
 }
 
 /* レスポンシブ調整 */
@@ -865,12 +865,12 @@ const withExcerpt = posts
   }
 }
 
-/* ▼ 空白が出ないクロスフェード（1枚＝24sの25%担当） */
+/* ▼ 空白が出ないクロスフェード（1枚＝24sの約33%担当） */
 @keyframes smoothSlideShow {
   0%    { opacity: 0; }
   2%    { opacity: 1; }  /* 先行IN開始（24sの2% = 約0.48s） */
-  22%   { opacity: 1; }  /* 担当枠内の可視維持 */
-  28%   { opacity: 0; }  /* 遅延OUT終了（24sの3% = 約0.72s） */
+  35%   { opacity: 1; }  /* 担当枠内の可視維持（3枚想定） */
+  42%   { opacity: 0; }  /* 遅延OUT終了 */
   100%  { opacity: 0; }
 }
 /* お好みで：視覚効果を減らしたい人への配慮 */
