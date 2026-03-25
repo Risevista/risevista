@@ -670,7 +670,7 @@ const withExcerpt = posts
     --draw: 1.2s;   /* 1文字を描く時間 */
     --step: .12s;   /* 文字間ディレイ */
     --ink: #004f3c; /* stroke の色（緑の縁） */
-    --fill: #C79D4F; /* fill の色（金色） */
+    --fill: #004f3c; /* fill の色（緑） */
   }
   @media (max-width: 768px){
     :root{
@@ -704,16 +704,11 @@ const withExcerpt = posts
   /* ヒーロー見出し（SVG）に影を付ける */
   .hero-svg-headline text{
     /* strokeの輪郭ガタつきを避けるため、縁取りは緑のshadowで擬似的に作る */
-    filter: 
-      drop-shadow(-1px -1px 0 rgba(0, 79, 60, 1))
-      drop-shadow(0px -1px 0 rgba(0, 79, 60, 1))
-      drop-shadow(1px -1px 0 rgba(0, 79, 60, 1))
-      drop-shadow(-1px 0px 0 rgba(0, 79, 60, 1))
-      drop-shadow(1px 0px 0 rgba(0, 79, 60, 1))
-      drop-shadow(-1px 1px 0 rgba(0, 79, 60, 1))
-      drop-shadow(0px 1px 0 rgba(0, 79, 60, 1))
-      drop-shadow(1px 1px 0 rgba(0, 79, 60, 1))
-      /* 影（奥行き） */
+    /* 縁取り（緑のアウトライン）を無くして、奥行き影のみ残す */
+    filter:
+      /* 白い影（グロー） */
+      drop-shadow(0 0 2px rgba(255,255,255,0.75))
+      drop-shadow(0 0 10px rgba(255,255,255,0.25))
       drop-shadow(0 2px 4px rgba(0,0,0,0.35))
       drop-shadow(0 8px 20px rgba(0,0,0,0.18)) !important;
   }
@@ -733,7 +728,7 @@ const withExcerpt = posts
   .textcont{ width: min(92vw, 900px); height: auto; display: block; }
   .font-min{
     font-family: "fot-tsukumin-pr6n", sans-serif;
-    font-weight: 500; font-size: 80px; letter-spacing: .08em;
+    font-weight: 500; font-size: 90px; letter-spacing: .08em;
   }
   @media (max-width: 768px){
     .textcont{ 
@@ -766,7 +761,7 @@ const withExcerpt = posts
     }
   }
   @media (max-width: 768px){
-    .font-min{ font-size: clamp(50px, 12vw, 100px); }
+    .font-min{ font-size: clamp(48px, 11.5vw, 100px); }
     .textcont tspan{ stroke-width: 1.5px; }
   }
   .mcap img{ width: 260px; height: auto; display: block; }
