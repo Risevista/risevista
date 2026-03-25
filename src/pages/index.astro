@@ -688,10 +688,14 @@ const withExcerpt = posts
     align-items: center; justify-content: center;
     gap: 4px; z-index: 10;
   }
+  /* ヒーロー見出し（SVG）に影を付ける */
+  .hero-svg-headline text{
+    filter: drop-shadow(0 2px 4px rgba(6, 92, 32, 0.35)) drop-shadow(0 8px 20px rgba(1, 85, 3, 0.18));
+  }
   @media (min-width: 769px){
     /* スマホ以上は中央より少し上に配置 */
     .hero-svg-headline{
-      transform: translateY(-200px);
+      transform: translateY(-120px);
     }
   }
   @media (max-width: 768px){
