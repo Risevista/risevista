@@ -706,18 +706,9 @@ const withExcerpt = posts
     /* strokeの輪郭ガタつきを避けるため、縁取りは緑のshadowで擬似的に作る */
     /* 縁取り（緑のアウトライン）を無くして、奥行き影のみ残す */
     filter:
-      /* 白い影で“縁取り”っぽさを強化（細線向け） */
-      drop-shadow(-1px 0 0 rgba(255,255,255,0.95))
-      drop-shadow(1px 0 0 rgba(255,255,255,0.95))
-      drop-shadow(0 -1px 0 rgba(255,255,255,0.95))
-      drop-shadow(0 1px 0 rgba(255,255,255,0.95))
-      drop-shadow(-1px -1px 0 rgba(255,255,255,0.95))
-      drop-shadow(1px -1px 0 rgba(255,255,255,0.95))
-      drop-shadow(-1px 1px 0 rgba(255,255,255,0.95))
-      drop-shadow(1px 1px 0 rgba(255,255,255,0.95))
       /* 白グロー */
-      drop-shadow(0 0 6px rgba(255,255,255,0.35))
-      drop-shadow(0 0 16px rgba(255,255,255,0.18))
+      drop-shadow(0 0 10px rgba(255,255,255,0.45))
+      drop-shadow(0 0 22px rgba(255,255,255,0.22))
       /* 奥行き影（黒） */
       drop-shadow(0 2px 5px rgba(0,0,0,0.35))
       drop-shadow(0 10px 26px rgba(0,0,0,0.18)) !important;
@@ -725,13 +716,13 @@ const withExcerpt = posts
   @media (min-width: 769px){
     /* スマホ以上は中央より少し上に配置 */
     .hero-svg-headline{
-      transform: translateY(-160px);
+      transform: translateY(-200px);
     }
   }
   @media (max-width: 768px){
     .hero-svg-headline{
       justify-content: flex-start;
-      padding-top: 24px;
+      padding-top: 20px;
     }
 
   }
