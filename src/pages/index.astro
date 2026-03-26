@@ -763,7 +763,12 @@ const withExcerpt = posts
   }
   @media (max-width: 768px){
     .font-min{ font-size: clamp(55px, 13vw, 110px); }
-    .textcont tspan{ stroke-width: 1.5px; }
+    .textcont tspan{
+      /* モバイルでアニメーション開始前に透明のままになるのを防ぐ */
+      fill: var(--fill) !important;
+      animation: none !important;
+      stroke-width: 1.5px;
+    }
   }
   .mcap img{ width: 260px; height: auto; display: block; }
 
