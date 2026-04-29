@@ -90,6 +90,10 @@ const withExcerpt = posts
       <p class="hero-en-subtitle mt-2 text-secondary-screen font-tsukushi text-[13px] md:text-[16px] tracking-[0.08em]">
         Your Life Partner for the Long Run.
       </p>
+      <p class="hero-en-subtitle mt-16 text-secondary-screen font-tsukushi text-[18px] md:text-[24px] tracking-[0.08em] text-center">
+        日本に健全な投資文化を育み<br>
+        豊かさと成長を次世代へ
+      </p>
       </div>
     </div>
   </div>
@@ -103,13 +107,7 @@ const withExcerpt = posts
         <div class="w-[0.5px] h-[60px] bg-primary animate-rise-fade opacity-60"></div>
       </div>
     </div>
-    
-    <!-- 縦書きテキスト -->
-    <div class="writing-vertical text-secondary-screen text-[16px] leading-relaxed tracking-[0.3em] font-tsukushi"
-    style="text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.822);">
-     <div class="mt-16 fade-chars">{heroText.vertical.line1}</div>
-      <div class="mt-52 fade-chars">{heroText.vertical.line2}</div>
-    </div>
+
   </div>
 
   <!-- 4) 本文テキスト -->
@@ -1146,13 +1144,13 @@ const withExcerpt = posts
         }
       });
 
-      // SVG完了待ちが長すぎる場合は、ENサブタイトルを先に表示
-      const revealDelay = maxEndMs > 0 ? Math.min(maxEndMs, 600) : 250;
-      if (!heroSubtitleShown) {
-        if (heroSubtitleTimer) window.clearTimeout(heroSubtitleTimer);
+      // SVGテキストの描画がすべて完了した後に表示
+      const revealDelay = maxEndMs > 0 ? maxEndMs : 250;
+      if (!heroSubtitleShown && !heroSubtitleTimer) {
         heroSubtitleTimer = window.setTimeout(() => {
           heroSubtitles.forEach((el) => el.classList.add('is-visible'));
           heroSubtitleShown = true;
+          heroSubtitleTimer = undefined;
         }, revealDelay);
       }
       
@@ -1201,15 +1199,9 @@ const withExcerpt = posts
       console.log('Mobile optimizations applied');
     }
     
-    // 実行開始（まずHero文字アニメーションを即時開始）
-    startSvgAnimation();
+    // 実行開始
     handlePreloaderAndStart();
     setupIntersectionObserver();
-    
-    // 即座フォールバック（短め）
-    setTimeout(() => {
-      startSvgAnimation();
-    }, 150);
     
     // window.load での最終チェック（ラグなし）
     window.addEventListener('load', () => {
