@@ -73,26 +73,8 @@ const withExcerpt = posts
 
 <!-- ===== Hero: Mobile (md未満) ===== -->
 <section class="relative bg-primary-back min-h-[100dvh] flex flex-col md:hidden pt-20">
-  <!-- 2) 楕円スライダー -->
   <div class="relative w-full flex-1 flex items-center justify-center">
     <div class="relative w-full h-[60vh]">
-      <div class="absolute inset-0">
-        <div class="ellipse-image-container">
-          <div class="ellipse-wrapper">
-            {heroImages.map((heroImg, index) => (
-              <Image
-                src={heroImg}
-                alt={`背景画像 ${index + 1}`}
-                class={`ellipse-background-image slide-${index}`}
-                loading={index === 0 ? "eager" : "lazy"}
-                decoding="async"
-                data-preload
-                aria-hidden="true"
-              />
-            ))}
-          </div>
-        </div>
-      </div>
       <!-- SVG Headline (Mobile) -->
       <div class="hero-svg-headline" aria-label="人生100年時代を支える　あなたのパートナーに">
         <svg class="textcont" viewBox="0 0 1000 100" role="img" aria-label="人生100年時代を支える">
@@ -105,6 +87,9 @@ const withExcerpt = posts
             <tspan>　</tspan><tspan>あ</tspan><tspan>な</tspan><tspan>た</tspan><tspan>の</tspan><tspan>パ</tspan><tspan>ー</tspan><tspan>ト</tspan><tspan>ナ</tspan><tspan>ー</tspan><tspan>に</tspan>
           </text>
         </svg>
+      <p class="hero-en-subtitle mt-2 text-secondary-screen font-tsukushi text-[13px] md:text-[16px] tracking-[0.08em]">
+        Your Life Partner for the Long Run.
+      </p>
       </div>
     </div>
   </div>
@@ -137,24 +122,6 @@ const withExcerpt = posts
 
 <!-- ===== Hero: Desktop (md以上) —— 既存をそのまま残す ===== -->
 <section class="relative bg-primary-back min-h-[100dvh] overflow-hidden pt-20 md:pt-64 hidden md:flex">
-  <!-- 楕円形背景画像コンテナ --> 
-  <div class="absolute top-10 left-0 w-full h-full z-0">
-    <div class="ellipse-image-container">
-      <div class="ellipse-wrapper">
-        {heroImages.map((heroImg, index) => (
-          <Image
-            src={heroImg}
-            alt={`背景画像 ${index + 1}`}
-            class={`ellipse-background-image slide-${index}`}
-            loading={index === 0 ? "eager" : "lazy"}
-            decoding="async"
-            data-preload
-            aria-hidden="true"
-          />
-        ))}
-      </div>
-    </div>
-  </div>
 
   <!-- 縦書きテキスト -->
   <div class="absolute left-24 top-32 z-20 mt-10">
@@ -177,6 +144,9 @@ const withExcerpt = posts
         <tspan>　</tspan><tspan>あ</tspan><tspan>な</tspan><tspan>た</tspan><tspan>の</tspan><tspan>パ</tspan><tspan>ー</tspan><tspan>ト</tspan><tspan>ナ</tspan><tspan>ー</tspan><tspan>に</tspan>
       </text>
     </svg>
+    <p class="hero-en-subtitle mt-3 text-secondary-screen font-tsukushi text-[14px] md:text-[18px] tracking-[0.08em]">
+      Your Life Partner for the Long Run.
+    </p>
   </div>
 
   <!--  SCROLLバー（統合） -->
@@ -189,10 +159,10 @@ const withExcerpt = posts
 
   
   <!-- テキスト -->
-  <div class="text-primary p-6 md:p-10 w-[88%] z-20 opacity-90 absolute bottom-8 right-16 md:bottom-0 md:right-24 md:w-[42%] md:max-w-xl animate-text-up">
-    <p class="mt-6 text-[18px] text-secondary-screen tracking-normal font-tsukushi">
+  <div class="text-primary p-6 md:p-10 z-20 opacity-90 absolute bottom-8 right-16 md:bottom-0 md:right-24 md:max-w-none animate-text-up">
+    <p class="mt-6 text-[18px] text-secondary-screen tracking-normal font-tsukushi md:whitespace-nowrap">
       {heroText.description}
-    </p>  
+    </p>
   </div>
 </section>
 
@@ -724,30 +694,20 @@ const withExcerpt = posts
     align-items: center; justify-content: center;
     gap: 4px; z-index: 10;
   }
-  /* ヒーロー見出し（SVG）に影を付ける */
-  .hero-svg-headline text{
-    /* strokeの輪郭ガタつきを避けるため、縁取りは緑のshadowで擬似的に作る */
-    /* 縁取り（緑のアウトライン）を無くして、奥行き影のみ残す */
-    filter:
-      /* 白グロー */
-      drop-shadow(0 0 10px rgba(255,255,255,0.45))
-      drop-shadow(0 0 22px rgba(255,255,255,0.22))
-      /* 奥行き影（黒） */
-      drop-shadow(0 2px 5px rgba(0,0,0,0.35))
-      drop-shadow(0 10px 26px rgba(0,0,0,0.18)) !important;
+  /* 全デバイスでヒーローSVG見出しを垂直中央に配置 */
+  .hero-svg-headline{
+    transform: translateY(-80px);
+    justify-content: center;
+    padding-top: 0;
   }
-  @media (min-width: 769px){
-    /* スマホ以上は中央より少し上に配置 */
-    .hero-svg-headline{
-      transform: translateY(-200px);
-    }
+  .hero-en-subtitle{
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
   }
-  @media (max-width: 768px){
-    .hero-svg-headline{
-      justify-content: flex-start;
-      padding-top: 20px;
-    }
-
+  .hero-en-subtitle.is-visible{
+    opacity: 1;
+    transform: translateY(0);
   }
   .textcont{ width: min(92vw, 900px); height: auto; display: block; }
   .font-min{
@@ -1152,19 +1112,14 @@ const withExcerpt = posts
       }, 3000);
     };
     
+    // ENサブタイトルは初回表示のみ
+    let heroSubtitleShown = false;
+    let heroSubtitleTimer: number | undefined;
+
     // アニメーション開始（ラグなし）
     const startSvgAnimation = () => {
       const tspans = document.querySelectorAll('.textcont tspan');
-      
-      // アニメーションが既に動いているかチェック
-      const isAnimating = Array.from(tspans).some(t => {
-        const style = getComputedStyle(t as Element);
-        return style.animationName !== 'none' && style.animationPlayState === 'running';
-      });
-      
-      if (isAnimating) {
-        return; // 既にアニメーション中なら何もしない
-      }
+      const heroSubtitles = document.querySelectorAll('.hero-en-subtitle');
       
       tspans.forEach((t) => {
         const element = t as HTMLElement;
@@ -1176,6 +1131,30 @@ const withExcerpt = posts
         // アニメーション再開（即座）
         element.style.animation = '';
       });
+
+      // SVG文字アニメーションが完了したら英語サブタイトルを表示
+      let maxEndMs = 0;
+      tspans.forEach((t) => {
+        const style = getComputedStyle(t as Element);
+        const delays = (style.animationDelay || '0s').split(',').map(v => parseFloat(v) || 0);
+        const durations = (style.animationDuration || '0s').split(',').map(v => parseFloat(v) || 0);
+        const count = Math.max(delays.length, durations.length);
+        for (let i = 0; i < count; i++) {
+          const dly = (delays[i] ?? delays[delays.length - 1] ?? 0) * 1000;
+          const dur = (durations[i] ?? durations[durations.length - 1] ?? 0) * 1000;
+          maxEndMs = Math.max(maxEndMs, dly + dur);
+        }
+      });
+
+      // SVG完了待ちが長すぎる場合は、ENサブタイトルを先に表示
+      const revealDelay = maxEndMs > 0 ? Math.min(maxEndMs, 600) : 250;
+      if (!heroSubtitleShown) {
+        if (heroSubtitleTimer) window.clearTimeout(heroSubtitleTimer);
+        heroSubtitleTimer = window.setTimeout(() => {
+          heroSubtitles.forEach((el) => el.classList.add('is-visible'));
+          heroSubtitleShown = true;
+        }, revealDelay);
+      }
       
       console.log('SVG Animation started immediately');
     };
@@ -1222,14 +1201,15 @@ const withExcerpt = posts
       console.log('Mobile optimizations applied');
     }
     
-    // 実行開始
+    // 実行開始（まずHero文字アニメーションを即時開始）
+    startSvgAnimation();
     handlePreloaderAndStart();
     setupIntersectionObserver();
     
-    // 即座フォールバック（1秒後）
+    // 即座フォールバック（短め）
     setTimeout(() => {
       startSvgAnimation();
-    }, 1000);
+    }, 150);
     
     // window.load での最終チェック（ラグなし）
     window.addEventListener('load', () => {
@@ -1272,6 +1252,8 @@ const withExcerpt = posts
     const reveal = () => {
       if (preloader) preloader.style.display = 'none';
       if (pageRoot) pageRoot.classList.remove('opacity-0');
+      // 表示タイミングでSVGアニメーションを必ず再始動
+      startSvgAnimation();
     };
 
     const timeoutMs = 4000; // safety timeout
